@@ -4,9 +4,9 @@ import EverythingYouNeed from '@/components/EverythingYouNeed';
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-white font-sans antialiased">
+    <div className="min-h-screen overflow-x-hidden bg-white font-sans antialiased">
       <Navbar />
-      <main>
+      <main className="mx-2 md:mx-[86px]">
         <Hero />
         <EverythingYouNeed />
       </main>

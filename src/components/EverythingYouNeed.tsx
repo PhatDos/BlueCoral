@@ -1,12 +1,20 @@
 import { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { Briefcase, ChevronDown, ShoppingBag, Utensils } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 
 type Tab = 'an-uong' | 'ban-le' | 'dich-vu';
 
-const tabs: { id: Tab; label: string; isNew?: boolean }[] = [
-  { id: 'an-uong', label: 'Ăn uống' },
-  { id: 'ban-le', label: 'Bán lẻ', isNew: true },
-  { id: 'dich-vu', label: 'Dịch vụ', isNew: true },
+type TabItem = {
+  id: Tab;
+  label: string;
+  icon: LucideIcon;
+  isNew?: boolean;
+};
+
+const tabs: TabItem[] = [
+  { id: 'an-uong', label: 'Ăn uống', icon: Utensils },
+  { id: 'ban-le', label: 'Bán lẻ', icon: ShoppingBag, isNew: true },
+  { id: 'dich-vu', label: 'Dịch vụ', icon: Briefcase, isNew: true },
 ];
 
 const subItems = [
@@ -35,146 +43,153 @@ const tabContent: Record<Tab, { title: string; description: string }> = {
   },
 };
 
+const cardBackground = {
+  backgroundColor: '#F1F2E8',
+  backgroundImage:
+    'linear-gradient(45deg, rgba(184, 190, 169, 0.18) 1px, transparent 1px), linear-gradient(135deg, rgba(184, 190, 169, 0.14) 1px, transparent 1px), radial-gradient(circle at 82% 20%, rgba(255,255,255,0.64), transparent 26%), radial-gradient(circle at 34% 44%, rgba(255,255,255,0.5), transparent 28%)',
+  backgroundSize: '86px 86px, 86px 86px, 100% 100%, 100% 100%',
+} as const;
+
 export default function EverythingYouNeed() {
   const [activeTab, setActiveTab] = useState<Tab>('an-uong');
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const activeTabData = tabs.find((t) => t.id === activeTab)!;
+  const ActiveIcon = activeTabData.icon;
   const content = tabContent[activeTab];
 
   return (
-    <section className="py-16 md:py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-10 md:mb-14">
-          <span className="inline-block px-3 py-1 bg-[#a8e63d] text-gray-800 text-xs font-bold rounded-full mb-4 tracking-widest uppercase">
+    <section className="bg-white pb-12 pt-5 md:pb-24 md:pt-16">
+      <div className="mx-auto max-w-[1176px]">
+        <div className="text-center">
+          <span className="inline-flex h-5 items-center rounded-full bg-[#BFFB4F] px-3 text-[7px] font-extrabold uppercase leading-none text-[#2D2F33] md:h-6 md:px-4 md:text-[10px]">
             Long Subtitle
           </span>
-          <h2 className="text-gray-900 mb-4" style={{ fontSize: '56px', lineHeight: '68px', fontWeight: 800, textAlign: 'center' }}>
+          <h2 className="mt-3 text-[18px] font-extrabold leading-[1.25] tracking-[-0.02em] text-[#2D2F33] md:mt-5 md:text-[56px] md:leading-[68px]">
             Everything You Need
           </h2>
-          <p className="text-gray-500 max-w-xl mx-auto" style={{ fontSize: '16px', lineHeight: '28px', fontWeight: 400, textAlign: 'center' }}>
+          <p className="mx-auto mt-3 max-w-[190px] text-[8px] leading-[14px] text-[#2D2F33]/75 md:mt-4 md:max-w-[805px] md:text-[16px] md:leading-7">
             Improve speed of service, boost kitchen efficiency, and drive repeat business with a
             restaurant management solution that offers everything you need to maximize profits and
-            offer an unparalleled guest experience – all in one place.
+            offer an unparalleled guest experience - all in one place.
           </p>
         </div>
 
-        {/* Desktop tabs */}
-        <div className="hidden md:flex justify-center mb-6">
-          <div className="flex items-center bg-gray-900 rounded-full p-1 gap-1">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-1.5 px-5 py-2 rounded-full transition-all duration-200 ${
-                  activeTab === tab.id
-                    ? 'bg-white text-gray-900 shadow'
-                    : 'text-gray-300 hover:text-white'
-                }`}
-                style={{ fontSize: '16px', lineHeight: '24px', fontWeight: 600, textAlign: 'center' }}
-              >
-                {tab.label}
-                {tab.isNew && (
-                  <span className="px-1.5 py-0.5 bg-[#a8e63d] text-gray-900 text-[10px] font-bold rounded-sm leading-none">
-                    NEW
-                  </span>
-                )}
-              </button>
-            ))}
-          </div>
-        </div>
+        <div className="relative mt-9 md:mt-[64px]">
+          <div className="absolute left-1/2 top-0 z-20 hidden -translate-x-1/2 -translate-y-1/2 rounded-b-[24px] bg-white px-3 pb-3 md:block">
+            <div className="flex h-[42px] items-center gap-2">
+              {tabs.map((tab) => {
+                const Icon = tab.icon;
+                const isActive = activeTab === tab.id;
 
-        {/* Mobile tab selector (dropdown style) */}
-        <div className="md:hidden mb-4 flex justify-center">
-          <div className="relative">
-            <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="flex items-center gap-2 px-5 py-2.5 bg-gray-900 text-white rounded-full text-sm font-medium"
-            >
-              {activeTabData.label}
-              {activeTabData.isNew && (
-                <span className="px-1.5 py-0.5 bg-[#a8e63d] text-gray-900 text-[10px] font-bold rounded-sm">
-                  NEW
-                </span>
-              )}
-              <ChevronDown size={15} className={`transition-transform ${mobileOpen ? 'rotate-180' : ''}`} />
-            </button>
-            {mobileOpen && (
-              <div className="absolute top-full left-0 mt-2 bg-white rounded-xl shadow-lg border border-gray-100 py-1 min-w-[160px] z-10">
-                {tabs.map((tab) => (
+                return (
                   <button
                     key={tab.id}
-                    onClick={() => { setActiveTab(tab.id); setMobileOpen(false); }}
-                    className="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 text-left"
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`flex h-[42px] items-center justify-center gap-2 rounded-full px-7 transition-all duration-200 ${
+                      isActive ? 'bg-[#2D2F33] text-white shadow' : 'bg-white text-[#2D2F33]'
+                    }`}
+                    style={{ fontSize: '16px', lineHeight: '24px', fontWeight: 600 }}
                   >
+                    <Icon size={16} strokeWidth={2.3} />
                     {tab.label}
                     {tab.isNew && (
-                      <span className="px-1.5 py-0.5 bg-[#a8e63d] text-gray-900 text-[10px] font-bold rounded-sm">
+                      <span className="rounded-full bg-[#BFFB4F] px-2 py-1 text-[10px] font-extrabold leading-none text-[#2D2F33]">
                         NEW
                       </span>
                     )}
                   </button>
-                ))}
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-1/2 md:hidden">
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="flex h-[28px] min-w-[110px] items-center justify-center gap-1.5 rounded-full bg-[#2D2F33] px-4 text-[8px] font-bold text-white shadow-[0_8px_18px_rgba(0,0,0,0.16)]"
+            >
+              <ActiveIcon size={10} strokeWidth={2.4} />
+              {activeTabData.label}
+              {activeTabData.isNew && (
+                <span className="rounded-full bg-[#BFFB4F] px-1.5 py-0.5 text-[6px] font-extrabold leading-none text-[#2D2F33]">
+                  NEW
+                </span>
+              )}
+              <ChevronDown size={10} className={`transition-transform ${mobileOpen ? 'rotate-180' : ''}`} />
+            </button>
+            {mobileOpen && (
+              <div className="absolute left-1/2 top-full mt-1 w-[132px] -translate-x-1/2 overflow-hidden rounded-xl border border-gray-100 bg-white py-1 shadow-lg">
+                {tabs.map((tab) => {
+                  const Icon = tab.icon;
+
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => {
+                        setActiveTab(tab.id);
+                        setMobileOpen(false);
+                      }}
+                      className="flex w-full items-center gap-1.5 px-3 py-2 text-left text-[8px] font-semibold text-[#2D2F33] hover:bg-gray-50"
+                    >
+                      <Icon size={10} />
+                      {tab.label}
+                      {tab.isNew && (
+                        <span className="rounded-full bg-[#BFFB4F] px-1.5 py-0.5 text-[6px] font-extrabold leading-none text-[#2D2F33]">
+                          NEW
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
               </div>
             )}
           </div>
-        </div>
 
-        {/* Content card */}
-        <div className="bg-[#f5f5f0] rounded-3xl p-6 md:p-10">
-          {/* Mobile: accordion sub items */}
-          <div className="md:hidden mb-5">
-            <details className="bg-white rounded-xl shadow-sm">
-              <summary className="flex items-center justify-between px-5 py-4 cursor-pointer text-sm font-semibold text-gray-900 list-none">
-                {content.title}
-                <ChevronDown size={16} />
-              </summary>
-              <div className="px-5 pb-4 text-sm text-gray-600 leading-relaxed">
-                {content.description}
+          <div
+            className="relative min-h-[286px] overflow-hidden rounded-[18px] px-3 pb-3 pt-[36px] md:min-h-[667px] md:rounded-[32px] md:px-[52px] md:pb-[52px] md:pt-[88px] lg:px-[52px]"
+            style={cardBackground}
+          >
+            <div className="md:hidden">
+              <div className="relative z-10">
+                <button
+                  onClick={() => setMobileOpen(!mobileOpen)}
+                  className="mb-4 flex h-[27px] w-full items-center justify-between rounded-full bg-white px-4 text-[7px] font-medium text-[#2D2F33] shadow-[0_4px_18px_rgba(0,0,0,0.05)]"
+                >
+                  {content.title}
+                  <ChevronDown size={10} className={`transition-transform ${mobileOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                <h3 className="text-[15px] font-extrabold leading-[1.25] text-[#2D2F33]">{content.title}</h3>
+                <p className="mt-1 max-w-[150px] text-[7px] leading-[12px] text-[#2D2F33]/75">{content.description}</p>
+
+                <div className="mt-4 h-[156px] rounded-[12px] bg-white shadow-[0_8px_20px_rgba(0,0,0,0.04)]" />
               </div>
-            </details>
-          </div>
+            </div>
 
-          {/* Desktop two-column layout */}
-          <div className="hidden md:grid grid-cols-2 gap-10 items-start">
-            {/* Left column */}
-            <div>
-              <div className="flex items-start gap-3 mb-3">
-                <div className="w-1 h-10 bg-[#a8e63d] rounded-full flex-shrink-0 mt-0.5" />
-                <div>
-                  <h3 className="text-gray-900 mb-2" style={{ fontSize: '36px', lineHeight: '140%', fontWeight: 700 }}>
-                    {content.title}
-                  </h3>
-                  <p className="text-gray-500 max-w-xs" style={{ fontSize: '16px', lineHeight: '28px', fontWeight: 400 }}>
-                    {content.description}
-                  </p>
+            <div className="hidden md:grid md:grid-cols-[1fr_525px] md:items-start md:gap-[70px]">
+              <div className="relative min-h-[475px] pl-9 pt-[62px]">
+                <div className="absolute left-0 top-0 h-full w-px bg-[#DCE0D2]" />
+                <div className="absolute left-0 top-[62px] h-[43px] w-[3px] -translate-x-px rounded-full bg-[#7E878B]" />
+
+                <h3 className="text-[32px] font-extrabold leading-[44px] tracking-[-0.02em] text-[#2D2F33]">
+                  {content.title}
+                </h3>
+                <p className="mt-2 max-w-[390px] text-[16px] leading-7 text-[#2D2F33]/80">{content.description}</p>
+
+                <div className="mt-[92px] space-y-[32px]">
+                  {subItems.map((item) => (
+                    <button
+                      key={item}
+                      className="block text-left text-[20px] font-extrabold leading-7 text-[#2D2F33] transition-colors hover:text-black"
+                    >
+                      {item}
+                    </button>
+                  ))}
                 </div>
               </div>
 
-              <div className="mt-8 space-y-0 divide-y divide-gray-200 border-y border-gray-200">
-                {subItems.map((item) => (
-                  <button
-                    key={item}
-                    className="w-full text-left px-1 py-4 text-gray-700 hover:text-gray-900 transition-all"
-                    style={{ fontSize: '20px', lineHeight: '140%', fontWeight: 700 }}
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Right column: image placeholder */}
-            <div className="rounded-2xl bg-white shadow-sm overflow-hidden h-80 flex items-center justify-center">
-              <div className="text-gray-300 text-sm">Preview image</div>
-            </div>
-          </div>
-
-          {/* Mobile content (below accordion) */}
-          <div className="md:hidden">
-            <div className="rounded-2xl bg-white shadow-sm overflow-hidden h-48 flex items-center justify-center">
-              <div className="text-gray-300 text-sm">Preview image</div>
+              <div className="h-[525px] rounded-[18px] bg-white shadow-[0_10px_24px_rgba(0,0,0,0.03)]" />
             </div>
           </div>
         </div>
