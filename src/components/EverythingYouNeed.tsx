@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { ReactNode } from 'react';
+import type { MouseEvent, ReactNode } from 'react';
 import { Briefcase, ChevronDown, ShoppingBag, Utensils } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/cn';
@@ -119,8 +119,10 @@ function IndustryTabs({
   onChange: (id: IndustryId) => void;
 }) {
   return (
-    <div className="absolute left-1/2 top-0 z-20 hidden -translate-x-1/2 -translate-y-1/2 rounded-b-[24px] bg-white px-3 pb-3 md:block">
-      <div className="flex h-[42px] items-center gap-2">
+    <div className="absolute left-1/2 top-0 z-20 hidden -translate-x-1/2 -translate-y-1 rounded-b-[34px] bg-white px-4 pb-3 md:block">
+      <span className="pointer-events-none absolute -left-8 top-0 h-8 w-8 rounded-tr-[34px] shadow-[10px_-10px_0_8px_white]" />
+      <span className="pointer-events-none absolute -right-8 top-0 h-8 w-8 rounded-tl-[34px] shadow-[-10px_-10px_0_8px_white]" />
+      <div className="relative flex h-[48px] items-center gap-4">
         {industries.map((industry) => (
           <IndustryButton
             key={industry.id}
@@ -148,10 +150,12 @@ function MobileIndustryMenu({
   const ActiveIcon = active.icon;
 
   return (
-    <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-1/2 md:hidden">
+    <div className="absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-1 rounded-b-[18px] border-x border-b border-gray-100 bg-white px-2 pb-2 md:hidden">
+      <span className="pointer-events-none absolute -left-4 top-0 h-4 w-4 rounded-tr-[18px] shadow-[5px_-5px_0_4px_white]" />
+      <span className="pointer-events-none absolute -right-4 top-0 h-4 w-4 rounded-tl-[18px] shadow-[-5px_-5px_0_4px_white]" />
       <button
         onClick={() => onOpenChange(!isOpen)}
-        className="flex h-[28px] min-w-[110px] items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-[#2D2F33] px-4 text-[8px] font-bold text-white shadow-[0_8px_18px_rgba(0,0,0,0.16)]"
+        className="relative flex h-[28px] min-w-[116px] items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-[#2D2F33] px-4 text-[8px] font-bold text-white shadow-[0_8px_18px_rgba(0,0,0,0.16)]"
       >
         <ActiveIcon size={10} strokeWidth={2.4} />
         {active.label}
@@ -160,7 +164,7 @@ function MobileIndustryMenu({
       </button>
 
       {isOpen && (
-        <div className="absolute left-1/2 top-full mt-1 w-[132px] -translate-x-1/2 overflow-hidden rounded-xl border border-gray-100 bg-white py-1 shadow-lg">
+        <div className="absolute left-1/2 top-full mt-2 w-[148px] -translate-x-1/2 overflow-hidden rounded-xl border border-gray-100 bg-white py-1 shadow-[0_14px_32px_rgba(15,23,42,0.12)] animate-fade-in">
           {industries.map((industry) => {
             const Icon = industry.icon;
 
@@ -197,8 +201,8 @@ function IndustryButton({
     <button
       onClick={onClick}
       className={cn(
-        'flex h-[42px] items-center justify-center gap-2 whitespace-nowrap rounded-full px-7 text-[16px] font-semibold leading-6 transition-all duration-200',
-        isActive ? 'bg-[#2D2F33] text-white shadow' : 'bg-white text-[#2D2F33]',
+        'flex h-[48px] items-center justify-center gap-2 whitespace-nowrap rounded-full text-[16px] font-semibold leading-6 transition-all duration-200',
+        isActive ? 'min-w-[200px] bg-[#2D2F33] px-9 text-white shadow' : 'min-w-[126px] bg-white px-5 text-[#2D2F33]',
       )}
     >
       <Icon size={16} strokeWidth={2.3} />
@@ -231,7 +235,7 @@ function MobileFeatureContent({
   onOpenChange: (open: boolean) => void;
 }) {
   return (
-    <div className="relative z-10 md:hidden">
+    <div className="relative z-10 mx-auto w-full max-w-[260px] text-center md:hidden">
       <button
         onClick={() => onOpenChange(!isOpen)}
         className="mb-4 flex h-[27px] w-full items-center justify-between whitespace-nowrap rounded-full bg-white px-4 text-[7px] font-medium text-[#2D2F33] shadow-[0_4px_18px_rgba(0,0,0,0.05)]"
@@ -250,25 +254,38 @@ function MobileFeatureContent({
         </div>
       )}
 
-      <FeatureSummary content={content} compact />
+      <FeatureSummary content={content} compact align="center" />
       <FeaturePreview image={image} compact />
     </div>
   );
 }
 
 function DesktopFeatureContent({ content, image }: { content: IndustryContent; image: string }) {
+  const defaultIndicatorTop = 62;
+  const indicatorHeight = 43;
+  const [indicatorTop, setIndicatorTop] = useState(defaultIndicatorTop);
+
+  function moveIndicator(event: MouseEvent<HTMLButtonElement>) {
+    const button = event.currentTarget;
+    setIndicatorTop(button.offsetTop + button.offsetHeight / 2 - indicatorHeight / 2);
+  }
+
   return (
     <div className="hidden md:grid md:grid-cols-[1fr_525px] md:items-start md:gap-[70px]">
       <div className="relative min-h-[475px] pl-9 pt-[62px]">
         <div className="absolute left-0 top-0 h-full w-px bg-[#DCE0D2]" />
-        <div className="absolute left-0 top-[62px] h-[43px] w-[3px] -translate-x-px rounded-full bg-[#7E878B]" />
+        <div
+          className="absolute left-0 h-[43px] w-[3px] -translate-x-px rounded-full bg-[#7E878B] transition-[top] duration-300 ease-out"
+          style={{ top: indicatorTop }}
+        />
 
         <FeatureSummary content={content} />
 
-        <div className="mt-[92px] space-y-[32px]">
+        <div className="mt-[92px] space-y-[32px]" onMouseLeave={() => setIndicatorTop(defaultIndicatorTop)}>
           {content.options.map((option) => (
             <button
               key={option}
+              onMouseEnter={moveIndicator}
               className="block whitespace-nowrap text-left text-[20px] font-extrabold leading-7 text-[#2D2F33] transition-colors hover:text-black"
             >
               {option}
@@ -282,18 +299,33 @@ function DesktopFeatureContent({ content, image }: { content: IndustryContent; i
   );
 }
 
-function FeatureSummary({ content, compact = false }: { content: IndustryContent; compact?: boolean }) {
+function FeatureSummary({
+  content,
+  compact = false,
+  align = 'left',
+}: {
+  content: IndustryContent;
+  compact?: boolean;
+  align?: 'left' | 'center';
+}) {
   return (
     <>
       <h3
         className={cn(
           'font-extrabold text-[#2D2F33]',
           compact ? 'text-[15px] leading-[1.25]' : 'text-[32px] leading-[44px] tracking-[-0.02em]',
+          align === 'center' && 'text-center',
         )}
       >
         {content.title}
       </h3>
-      <p className={cn('text-[#2D2F33]/75', compact ? 'mt-1 max-w-[150px] text-[7px] leading-[12px]' : 'mt-2 max-w-[390px] text-[16px] leading-7')}>
+      <p
+        className={cn(
+          'text-[#2D2F33]/75',
+          compact ? 'mt-1 max-w-[150px] text-[7px] leading-[12px]' : 'mt-2 max-w-[390px] text-[16px] leading-7',
+          align === 'center' && 'mx-auto text-center',
+        )}
+      >
         {content.description}
       </p>
     </>
@@ -305,7 +337,7 @@ function FeaturePreview({ image, compact = false }: { image: string; compact?: b
     <div
       className={cn(
         'overflow-hidden bg-white shadow-[0_8px_20px_rgba(0,0,0,0.04)]',
-        compact ? 'mt-4 h-[156px] rounded-[12px]' : 'h-[525px] rounded-[18px]',
+        compact ? 'mx-auto mt-4 h-[156px] rounded-[12px]' : 'h-[525px] rounded-[18px]',
       )}
     >
       <img src={image} alt="" aria-hidden="true" className="h-full w-full object-cover" />
@@ -325,8 +357,8 @@ function NewBadge({ size = 'md' }: { size?: 'sm' | 'md' }) {
   return (
     <span
       className={cn(
-        'whitespace-nowrap rounded-full bg-[#BFFB4F] font-extrabold leading-none text-[#2D2F33]',
-        size === 'sm' ? 'px-1.5 py-0.5 text-[6px]' : 'px-2 py-1 text-[10px]',
+        'inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#BFFB4F] font-extrabold leading-none text-[#2D2F33]',
+        size === 'sm' ? 'h-3 px-1.5 text-[6px]' : 'h-6 px-3 text-[10px]',
       )}
     >
       NEW

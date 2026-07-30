@@ -51,12 +51,16 @@ function MobileHero() {
 function DesktopHero() {
   return (
     <div className="hidden md:block">
-      <img
-        src="/images/hero-bg.png"
-        alt=""
-        aria-hidden="true"
-        className="absolute h-full w-full object-cover object-[68%_center] xl:object-center"
-      />
+      <div className="absolute inset-0 grid grid-cols-2" aria-hidden="true">
+        <img src="/images/hero-bg-left.png" alt="" className="h-full w-full object-cover object-left" />
+        <div className="relative overflow-hidden bg-[linear-gradient(90deg,#F8F7ED_0%,#F2F7D7_100%)]">
+          <img
+            src="/images/hero-bg-right.png"
+            alt=""
+            className="absolute right-0 top-1/2 h-auto w-full max-w-none -translate-y-1/2"
+          />
+        </div>
+      </div>
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(248,246,238,0.94)_0%,rgba(248,246,238,0.78)_30%,rgba(248,246,238,0.28)_55%,rgba(248,246,238,0.08)_78%,rgba(248,246,238,0)_100%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_8%_14%,rgba(255,255,255,0.6),transparent_11%),radial-gradient(circle_at_86%_16%,rgba(216,248,86,0.22),transparent_17%),radial-gradient(circle_at_12%_84%,rgba(198,242,53,0.16),transparent_22%)]" />
 
