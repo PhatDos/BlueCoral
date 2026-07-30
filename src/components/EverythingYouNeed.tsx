@@ -155,16 +155,18 @@ function MobileIndustryMenu({
       <span className="pointer-events-none absolute -right-4 top-0 h-4 w-4 rounded-tl-[18px] shadow-[-5px_-5px_0_4px_white]" />
       <button
         onClick={() => onOpenChange(!isOpen)}
-        className="relative flex h-[28px] min-w-[116px] items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-[#2D2F33] px-4 text-[8px] font-bold text-white shadow-[0_8px_18px_rgba(0,0,0,0.16)]"
+        className="relative flex h-[clamp(28px,7vw,34px)] min-w-[clamp(116px,34vw,148px)] items-center justify-center gap-[clamp(6px,1.7vw,8px)] whitespace-nowrap rounded-full bg-[#2D2F33] px-[clamp(16px,4.8vw,22px)] text-[clamp(8px,2.45vw,11px)] font-bold text-white shadow-[0_8px_18px_rgba(0,0,0,0.16)]"
       >
-        <ActiveIcon size={10} strokeWidth={2.4} />
+        <ActiveIcon className="h-[clamp(10px,2.8vw,13px)] w-[clamp(10px,2.8vw,13px)]" strokeWidth={2.4} />
         {active.label}
         {active.isNew && <NewBadge size="sm" />}
-        <ChevronDown size={10} className={cn('transition-transform', isOpen && 'rotate-180')} />
+        <ChevronDown
+          className={cn('h-[clamp(10px,2.8vw,13px)] w-[clamp(10px,2.8vw,13px)] transition-transform', isOpen && 'rotate-180')}
+        />
       </button>
 
       {isOpen && (
-        <div className="absolute left-1/2 top-full mt-1 w-[148px] -translate-x-1/2 overflow-hidden rounded-xl border border-gray-100 bg-white py-1 shadow-[0_14px_32px_rgba(15,23,42,0.12)] animate-dropdown-fade">
+        <div className="absolute left-1/2 top-full mt-1 w-[clamp(148px,42vw,178px)] -translate-x-1/2 overflow-hidden rounded-xl border border-gray-100 bg-white py-1 shadow-[0_14px_32px_rgba(15,23,42,0.12)] animate-dropdown-fade">
           {industries.map((industry) => {
             const Icon = industry.icon;
 
@@ -172,9 +174,9 @@ function MobileIndustryMenu({
               <button
                 key={industry.id}
                 onClick={() => onChange(industry.id)}
-                className="flex w-full items-center gap-1.5 whitespace-nowrap px-3 py-2 text-left text-[8px] font-semibold text-[#2D2F33] hover:bg-gray-50"
+                className="flex w-full items-center gap-1.5 whitespace-nowrap px-3 py-2 text-left text-[clamp(8px,2.35vw,10px)] font-semibold text-[#2D2F33] hover:bg-gray-50"
               >
-                <Icon size={10} />
+                <Icon className="h-[clamp(10px,2.8vw,12px)] w-[clamp(10px,2.8vw,12px)]" />
                 {industry.label}
                 {industry.isNew && <NewBadge size="sm" />}
               </button>
@@ -242,19 +244,19 @@ function MobileFeatureContent({
     <div className="relative z-10 mx-auto w-full text-center md:hidden">
       <button
         onClick={() => onOpenChange(!isOpen)}
-        className="mb-4 flex h-[27px] w-full items-center justify-between whitespace-nowrap rounded-full bg-white px-4 text-[7px] font-medium text-[#2D2F33] shadow-[0_4px_18px_rgba(0,0,0,0.05)]"
+        className="my-4 flex h-[clamp(27px,7vw,34px)] w-full items-center justify-between whitespace-nowrap rounded-full bg-white px-4 text-[clamp(7px,2.15vw,10px)] font-medium text-[#2D2F33] shadow-[0_4px_18px_rgba(0,0,0,0.05)]"
       >
         {content.title}
-        <ChevronDown size={10} className={cn('transition-transform', isOpen && 'rotate-180')} />
+        <ChevronDown className={cn('h-[clamp(10px,2.8vw,13px)] w-[clamp(10px,2.8vw,13px)] transition-transform', isOpen && 'rotate-180')} />
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 right-0 top-[31px] z-20 overflow-hidden rounded-xl bg-white py-1 shadow-lg animate-fade-in">
+        <div className="absolute left-0 right-0 top-[34px] z-20 overflow-hidden rounded-xl bg-white py-1 shadow-lg animate-fade-in">
           {menuOptions.map((option, index) => (
             <button
               key={option}
               className={cn(
-                'block w-full whitespace-nowrap px-4 py-2 text-left text-[9px] font-medium text-[#2D2F33] transition-all duration-200 hover:translate-x-1 hover:bg-gray-50 hover:font-semibold hover:text-black',
+                'block w-full whitespace-nowrap px-4 py-2 text-left text-[clamp(9px,2.45vw,11px)] font-medium text-[#2D2F33] transition-all duration-200 hover:translate-x-1 hover:bg-gray-50 hover:font-semibold hover:text-black',
                 index === 0 && 'font-semibold',
               )}
             >
@@ -368,7 +370,7 @@ function NewBadge({ size = 'md' }: { size?: 'sm' | 'md' }) {
     <span
       className={cn(
         'inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#BFFB4F] font-extrabold leading-none text-[#2D2F33]',
-        size === 'sm' ? 'h-3 px-1.5 text-[6px]' : 'h-6 px-3 text-[10px]',
+        size === 'sm' ? 'h-[clamp(12px,3vw,16px)] px-[clamp(6px,1.8vw,8px)] text-[clamp(6px,1.7vw,8px)]' : 'h-6 px-3 text-[10px]',
       )}
     >
       NEW

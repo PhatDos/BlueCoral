@@ -22,7 +22,7 @@ export default function HeroShowcase({ className }: { className?: string }) {
       aria-hidden="true"
     >
       <div className="absolute inset-x-[2%] top-[4%] h-[68%] overflow-hidden rounded-[14px] border border-[#B8FF3E] bg-white/70 shadow-[0_18px_40px_rgba(15,23,42,0.08),0_0_24px_rgba(184,255,62,0.42)] md:rounded-[28px] md:border-2 md:shadow-[0_18px_40px_rgba(15,23,42,0.08),0_0_34px_rgba(184,255,62,0.46)] xl:rounded-[32px]">
-        <img src="/images/MobileBg1.png" alt="" className="block h-full w-full object-cover object-center" />
+        <img src="/images/hero-showcase-main.png" alt="" className="block h-full w-full object-cover object-center" />
       </div>
 
       <div className="absolute bottom-[10%] left-1/2 grid h-[32%] w-[88%] -translate-x-1/2 grid-cols-3 gap-2 md:gap-3 lg:gap-5">

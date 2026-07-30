@@ -26,6 +26,20 @@
   .animate-dropdown-fade {
     animation: dropdown-fade 0.24s ease-out;
   }
+  @keyframes hero-copy-slide {
+    from { opacity: 0; transform: translateX(28px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .animate-hero-copy-slide {
+    animation: hero-copy-slide 0.48s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  @keyframes hero-visual-slide {
+    from { opacity: 0; transform: translateX(36px) scale(0.985); }
+    to { opacity: 1; transform: translateX(0) scale(1); }
+  }
+  .animate-hero-visual-slide {
+    animation: hero-visual-slide 0.58s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
   @keyframes overlay-fade {
     from { opacity: 0; }
     to { opacity: 1; }
