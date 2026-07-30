@@ -2,6 +2,10 @@
 
 Frontend implementation based on the provided design.
 
+## Live Demo
+
+https://blue-coral-liart.vercel.app/
+
 ## Tech Stack
 
 - React
