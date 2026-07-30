@@ -104,7 +104,7 @@ function HeroText({ variant }: { variant: 'mobile' | 'desktop' }) {
         className={cn(
           'font-extrabold tracking-[-0.02em] text-[#2D2F33]',
           isMobile
-            ? 'mx-auto max-w-[220px] text-[24px] leading-[1.18]'
+            ? 'mx-auto max-w-[370px] text-[24px] leading-[1.18]'
             : 'max-w-[500px] text-[36px] leading-[1.16] tracking-[-0.03em] lg:text-[44px] xl:max-w-[560px] xl:text-[56px] xl:leading-[1.21]',
         )}
       >
@@ -114,7 +114,7 @@ function HeroText({ variant }: { variant: 'mobile' | 'desktop' }) {
         className={cn(
           'text-[#2D2F33]',
           isMobile
-            ? 'mx-auto mt-4 max-w-[220px] text-[10px] leading-[1.55]'
+            ? 'mx-auto mt-4 max-w-[370px] text-[10px] leading-[1.55]'
             : 'mt-5 max-w-[390px] text-[15px] leading-7 xl:max-w-[440px] xl:text-[16px]',
         )}
       >
