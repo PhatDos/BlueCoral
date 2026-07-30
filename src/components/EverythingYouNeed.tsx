@@ -102,7 +102,7 @@ function SectionIntro() {
       <h2 className="mt-3 text-[18px] font-extrabold leading-[1.25] tracking-[-0.02em] text-[#2D2F33] md:mt-5 md:text-[56px] md:leading-[68px]">
         Everything You Need
       </h2>
-      <p className="mx-auto mt-3 max-w-[190px] text-[8px] leading-[14px] text-[#2D2F33]/75 md:mt-4 md:max-w-[805px] md:text-[16px] md:leading-7">
+      <p className="mx-auto mt-3 max-w-[340px] text-[11px] leading-[18px] text-[#2D2F33]/75 md:mt-4 md:max-w-[805px] md:px-0 md:text-[16px] md:leading-7">
         Improve speed of service, boost kitchen efficiency, and drive repeat business with a restaurant management
         solution that offers everything you need to maximize profits and offer an unparalleled guest experience - all in
         one place.
@@ -119,10 +119,10 @@ function IndustryTabs({
   onChange: (id: IndustryId) => void;
 }) {
   return (
-    <div className="absolute left-1/2 top-0 z-20 hidden -translate-x-1/2 -translate-y-1 rounded-b-[34px] bg-white px-4 pb-3 md:block">
+    <div className="absolute left-1/2 top-0 z-20 hidden -translate-x-1/2 -translate-y-1 rounded-b-[34px] bg-white px-3 pb-3 md:block lg:px-4">
       <span className="pointer-events-none absolute -left-8 top-0 h-8 w-8 rounded-tr-[34px] shadow-[10px_-10px_0_8px_white]" />
       <span className="pointer-events-none absolute -right-8 top-0 h-8 w-8 rounded-tl-[34px] shadow-[-10px_-10px_0_8px_white]" />
-      <div className="relative flex h-[48px] items-center gap-4">
+      <div className="relative flex h-[42px] items-center gap-2 lg:h-[48px] lg:gap-4">
         {industries.map((industry) => (
           <IndustryButton
             key={industry.id}
@@ -164,7 +164,7 @@ function MobileIndustryMenu({
       </button>
 
       {isOpen && (
-        <div className="absolute left-1/2 top-full mt-2 w-[148px] -translate-x-1/2 overflow-hidden rounded-xl border border-gray-100 bg-white py-1 shadow-[0_14px_32px_rgba(15,23,42,0.12)] animate-fade-in">
+        <div className="absolute left-1/2 top-full mt-1 w-[148px] -translate-x-1/2 overflow-hidden rounded-xl border border-gray-100 bg-white py-1 shadow-[0_14px_32px_rgba(15,23,42,0.12)] animate-dropdown-fade">
           {industries.map((industry) => {
             const Icon = industry.icon;
 
@@ -201,11 +201,13 @@ function IndustryButton({
     <button
       onClick={onClick}
       className={cn(
-        'flex h-[48px] items-center justify-center gap-2 whitespace-nowrap rounded-full text-[16px] font-semibold leading-6 transition-all duration-200',
-        isActive ? 'min-w-[200px] bg-[#2D2F33] px-9 text-white shadow' : 'min-w-[126px] bg-white px-5 text-[#2D2F33]',
+        'flex h-[42px] items-center justify-center gap-1.5 whitespace-nowrap rounded-full text-[14px] font-semibold leading-6 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-[1.02] hover:shadow-[0_10px_24px_rgba(15,23,42,0.12)] lg:h-[48px] lg:gap-2 lg:text-[16px]',
+        isActive
+          ? 'min-w-[164px] bg-[#2D2F33] px-6 text-white shadow lg:min-w-[200px] lg:px-9'
+          : 'min-w-[104px] bg-white px-4 text-[#2D2F33] lg:min-w-[126px] lg:px-5',
       )}
     >
-      <Icon size={16} strokeWidth={2.3} />
+      <Icon className="h-3.5 w-3.5 lg:h-4 lg:w-4" strokeWidth={2.3} />
       {industry.label}
       {industry.isNew && <NewBadge />}
     </button>
@@ -215,7 +217,7 @@ function IndustryButton({
 function FeatureCard({ children }: { children: ReactNode }) {
   return (
     <div
-      className="relative min-h-[286px] overflow-hidden rounded-[18px] px-3 pb-3 pt-[36px] md:min-h-[667px] md:rounded-[32px] md:px-[52px] md:pb-[52px] md:pt-[88px]"
+      className="relative min-h-[286px] overflow-hidden rounded-[18px] px-3 pb-3 pt-[36px] md:min-h-[667px] md:rounded-[32px] md:px-6 md:pb-10 md:pt-[88px] lg:px-10 lg:pb-12 xl:px-[52px] xl:pb-[52px]"
       style={cardBackground}
     >
       {children}
@@ -234,8 +236,10 @@ function MobileFeatureContent({
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
+  const menuOptions = [content.title, ...content.options];
+
   return (
-    <div className="relative z-10 mx-auto w-full max-w-[260px] text-center md:hidden">
+    <div className="relative z-10 mx-auto w-full text-center md:hidden">
       <button
         onClick={() => onOpenChange(!isOpen)}
         className="mb-4 flex h-[27px] w-full items-center justify-between whitespace-nowrap rounded-full bg-white px-4 text-[7px] font-medium text-[#2D2F33] shadow-[0_4px_18px_rgba(0,0,0,0.05)]"
@@ -245,9 +249,15 @@ function MobileFeatureContent({
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 right-0 top-[31px] z-20 overflow-hidden rounded-xl bg-white py-1 shadow-lg">
-          {content.options.map((option) => (
-            <button key={option} className="block w-full whitespace-nowrap px-4 py-2 text-left text-[8px] font-medium text-[#2D2F33]">
+        <div className="absolute left-0 right-0 top-[31px] z-20 overflow-hidden rounded-xl bg-white py-1 shadow-lg animate-fade-in">
+          {menuOptions.map((option, index) => (
+            <button
+              key={option}
+              className={cn(
+                'block w-full whitespace-nowrap px-4 py-2 text-left text-[9px] font-medium text-[#2D2F33] transition-all duration-200 hover:translate-x-1 hover:bg-gray-50 hover:font-semibold hover:text-black',
+                index === 0 && 'font-semibold',
+              )}
+            >
               {option}
             </button>
           ))}
@@ -271,8 +281,8 @@ function DesktopFeatureContent({ content, image }: { content: IndustryContent; i
   }
 
   return (
-    <div className="hidden md:grid md:grid-cols-[1fr_525px] md:items-start md:gap-[70px]">
-      <div className="relative min-h-[475px] pl-9 pt-[62px]">
+    <div className="hidden md:grid md:grid-cols-[minmax(0,0.76fr)_minmax(0,1.24fr)] md:items-start md:gap-6 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:gap-10 xl:grid-cols-2 xl:gap-[70px]">
+      <div className="relative min-h-[475px] min-w-0 pl-7 pt-[62px] lg:pl-9">
         <div className="absolute left-0 top-0 h-full w-px bg-[#DCE0D2]" />
         <div
           className="absolute left-0 h-[43px] w-[3px] -translate-x-px rounded-full bg-[#7E878B] transition-[top] duration-300 ease-out"
@@ -281,12 +291,12 @@ function DesktopFeatureContent({ content, image }: { content: IndustryContent; i
 
         <FeatureSummary content={content} />
 
-        <div className="mt-[92px] space-y-[32px]" onMouseLeave={() => setIndicatorTop(defaultIndicatorTop)}>
+        <div className="mt-[42px] space-y-6 lg:space-y-[32px]" onMouseLeave={() => setIndicatorTop(defaultIndicatorTop)}>
           {content.options.map((option) => (
             <button
               key={option}
               onMouseEnter={moveIndicator}
-              className="block whitespace-nowrap text-left text-[20px] font-extrabold leading-7 text-[#2D2F33] transition-colors hover:text-black"
+              className="block whitespace-nowrap text-left text-[16px] font-extrabold leading-7 text-[#2D2F33] transition-all duration-200 hover:translate-x-2 hover:text-black lg:text-[20px]"
             >
               {option}
             </button>
@@ -322,7 +332,7 @@ function FeatureSummary({
       <p
         className={cn(
           'text-[#2D2F33]/75',
-          compact ? 'mt-1 max-w-[150px] text-[7px] leading-[12px]' : 'mt-2 max-w-[390px] text-[16px] leading-7',
+          compact ? 'mt-2 max-w-[320px] text-[11px] leading-[18px]' : 'mt-2 max-w-[390px] text-[16px] leading-7',
           align === 'center' && 'mx-auto text-center',
         )}
       >
@@ -337,7 +347,7 @@ function FeaturePreview({ image, compact = false }: { image: string; compact?: b
     <div
       className={cn(
         'overflow-hidden bg-white shadow-[0_8px_20px_rgba(0,0,0,0.04)]',
-        compact ? 'mx-auto mt-4 h-[156px] rounded-[12px]' : 'h-[525px] rounded-[18px]',
+        compact ? 'mx-auto mt-6 aspect-[4/3] w-full rounded-[12px]' : 'aspect-square w-full max-w-[525px] justify-self-end rounded-[18px]',
       )}
     >
       <img src={image} alt="" aria-hidden="true" className="h-full w-full object-cover" />

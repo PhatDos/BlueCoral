@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { ArrowRight, ChevronDown, X } from 'lucide-react';
 import Logo from '@/components/Logo';
 import { FreeTrialButton, LoginButton } from '@/components/NavbarActions';
@@ -23,6 +24,8 @@ export default function MobileMenuPanel({
   onClosed,
   onDropdownChange,
 }: MobileMenuPanelProps) {
+  const [activeSolutionId, setActiveSolutionId] = useState<string | null>(null);
+
   return (
     <div className="fixed inset-0 z-50 xl:hidden">
       <button
@@ -66,9 +69,17 @@ export default function MobileMenuPanel({
             </button>
 
             {dropdownOpen && (
-              <div className="mt-2 space-y-1 rounded-2xl bg-white p-2 animate-fade-in">
+              <div
+                className="mt-2 space-y-1 rounded-2xl bg-white p-2 animate-fade-in"
+                onMouseLeave={() => setActiveSolutionId(null)}
+              >
                 {solutions.map((item) => (
-                  <PanelSolutionLink key={item.id} item={item} />
+                  <PanelSolutionLink
+                    key={item.id}
+                    item={item}
+                    active={activeSolutionId === item.id}
+                    onHover={() => setActiveSolutionId(item.id)}
+                  />
                 ))}
               </div>
             )}
@@ -99,14 +110,27 @@ export default function MobileMenuPanel({
   );
 }
 
-function PanelSolutionLink({ item }: { item: SolutionItem }) {
+function PanelSolutionLink({
+  item,
+  active,
+  onHover,
+}: {
+  item: SolutionItem;
+  active: boolean;
+  onHover: () => void;
+}) {
   return (
     <a
       href="#"
-      className="group flex items-center justify-between whitespace-nowrap rounded-xl px-3 py-2.5 text-sm text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900"
+      onMouseEnter={onHover}
+      onFocus={onHover}
+      className={cn(
+        'group flex items-center justify-between whitespace-nowrap rounded-xl px-3 py-2.5 text-sm transition-all duration-300 ease-out hover:bg-gray-50',
+        active ? 'font-semibold text-gray-900' : 'text-gray-600 hover:text-gray-900',
+      )}
     >
-      <span className={cn(item.featured && 'font-semibold text-gray-900')}>{item.label}</span>
-      {item.hasArrow && <ArrowRight size={14} className="text-gray-700 transition-transform group-hover:translate-x-1" />}
+      <span>{item.label}</span>
+      {active && <ArrowRight size={14} className="text-gray-700 transition-transform duration-300 ease-out group-hover:translate-x-1" />}
     </a>
   );
 }

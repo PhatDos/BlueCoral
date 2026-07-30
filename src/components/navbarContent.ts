@@ -11,7 +11,7 @@ export const navLinks = ['Thiết bị', 'Bảng giá', 'Hỗ trợ'];
 
 export const solutions: SolutionItem[] = [
   { id: 'overview', label: 'Lorem ipsum dolor' },
-  { id: 'highlight', label: 'Sed do eiusmod tempor', featured: true, hasArrow: true },
+  { id: 'highlight', label: 'Sed do eiusmod tempor' },
   { id: 'operations', label: 'Lorem ipsum dolor' },
   { id: 'analytics', label: 'Sed do eiusmod tempor' },
 ];

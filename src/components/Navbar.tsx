@@ -194,25 +194,45 @@ function NavLink({ children }: { children: ReactNode }) {
 }
 
 function SolutionsDropdown() {
+  const [activeId, setActiveId] = useState<string | null>(null);
+
   return (
-    <div className="absolute left-1/2 top-full mt-4 min-w-[320px] -translate-x-1/2 rounded-[20px] border border-gray-100 bg-white py-4 shadow-[0_18px_50px_rgba(0,0,0,0.12)] animate-fade-in">
+    <div
+      className="absolute left-1/2 top-full mt-4 min-w-[268px] -translate-x-1/2 rounded-[20px] border border-gray-100 bg-white py-3 shadow-[0_18px_50px_rgba(0,0,0,0.12)] animate-dropdown-fade"
+      onMouseLeave={() => setActiveId(null)}
+    >
       {solutions.map((item) => (
-        <SolutionLink key={item.id} item={item} />
+        <SolutionLink
+          key={item.id}
+          item={item}
+          active={activeId === item.id}
+          onHover={() => setActiveId(item.id)}
+        />
       ))}
     </div>
   );
 }
 
-function SolutionLink({ item }: { item: SolutionItem }) {
+function SolutionLink({
+  item,
+  active,
+  onHover,
+}: {
+  item: SolutionItem;
+  active: boolean;
+  onHover: () => void;
+}) {
   return (
     <a
       href="#"
-      className="group flex items-center justify-between whitespace-nowrap rounded-xl px-6 py-3.5 transition-colors hover:bg-gray-50"
+      onMouseEnter={onHover}
+      onFocus={onHover}
+      className="group flex items-center justify-between whitespace-nowrap rounded-xl px-5 py-3 transition-all duration-300 ease-out hover:bg-gray-50"
     >
-      <span className={cn('text-[18px] leading-7', item.featured ? 'font-semibold text-gray-900' : 'text-gray-600')}>
+      <span className={cn('text-[17px] leading-7 transition-all duration-300 ease-out', active ? 'font-semibold text-gray-900' : 'text-gray-600')}>
         {item.label}
       </span>
-      {item.hasArrow && <ArrowRight size={17} className="text-gray-700 transition-transform group-hover:translate-x-1" />}
+      {active && <ArrowRight size={17} className="text-gray-700 transition-transform duration-300 ease-out group-hover:translate-x-1" />}
     </a>
   );
 }

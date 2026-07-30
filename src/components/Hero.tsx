@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react';
+import HeroShowcase from '@/components/HeroShowcase';
 import Logo from '@/components/Logo';
 import { cn } from '@/lib/cn';
 
@@ -14,12 +15,6 @@ const HERO_COPY = {
     'Chào mừng bạn đến với Xứ sở thần tiên. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
   cta: 'Đặt lịch tư vấn',
 };
-
-const mobileCards = [
-  { src: '/images/an-uong.png', label: 'Ăn uống' },
-  { src: '/images/ban-le.png', label: 'Bán lẻ' },
-  { src: '/images/dich-vu.png', label: 'Dịch vụ' },
-];
 
 export default function Hero() {
   return (
@@ -38,9 +33,11 @@ export default function Hero() {
 function MobileHero() {
   return (
     <div className="md:hidden">
-      <MobileArtwork />
+      <div className="px-4 pt-4">
+        <HeroShowcase className="max-w-full" />
+      </div>
 
-      <div className="px-4 pb-4 pt-4">
+      <div className="mx-auto max-w-[460px] px-4 pb-4 pt-4 text-center">
         <BrandPill className="mb-3 h-5 w-[50px] px-[5px]" logoSize={14} />
         <HeroText variant="mobile" />
       </div>
@@ -51,18 +48,7 @@ function MobileHero() {
 function DesktopHero() {
   return (
     <div className="hidden md:block">
-      <div className="absolute inset-0 grid grid-cols-2" aria-hidden="true">
-        <img src="/images/hero-bg-left.png" alt="" className="h-full w-full object-cover object-left" />
-        <div className="relative overflow-hidden bg-[linear-gradient(90deg,#F8F7ED_0%,#F2F7D7_100%)]">
-          <img
-            src="/images/hero-bg-right.png"
-            alt=""
-            className="absolute right-0 top-1/2 h-auto w-full max-w-none -translate-y-1/2"
-          />
-        </div>
-      </div>
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(248,246,238,0.94)_0%,rgba(248,246,238,0.78)_30%,rgba(248,246,238,0.28)_55%,rgba(248,246,238,0.08)_78%,rgba(248,246,238,0)_100%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_8%_14%,rgba(255,255,255,0.6),transparent_11%),radial-gradient(circle_at_86%_16%,rgba(216,248,86,0.22),transparent_17%),radial-gradient(circle_at_12%_84%,rgba(198,242,53,0.16),transparent_22%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,#F8F7ED_0%,#F2F7D7_100%)]" aria-hidden="true" />
 
       <div className="relative z-10 grid min-h-[590px] grid-cols-[minmax(0,0.76fr)_minmax(0,1.24fr)] items-center gap-6 px-6 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:px-10 xl:grid-cols-2 xl:gap-8 xl:px-14">
         <div className="min-w-0 max-w-[500px] xl:max-w-[560px]">
@@ -73,34 +59,7 @@ function DesktopHero() {
           />
           <HeroText variant="desktop" />
         </div>
-        <div className="min-h-[420px] min-w-0" aria-hidden="true" />
-      </div>
-    </div>
-  );
-}
-
-function MobileArtwork() {
-  return (
-    <div className="relative mx-3 mt-3 h-[116px] overflow-hidden rounded-[7px] bg-[#edf4d9]">
-      <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(191,251,79,0.26),rgba(255,255,255,0.64)_58%,rgba(191,251,79,0.18))]" />
-      <img
-        src="/images/MobileBg1.png"
-        alt=""
-        aria-hidden="true"
-        className="absolute bottom-[-4px] left-[-56px] h-auto w-[300px] max-w-none"
-      />
-      <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 items-end gap-1.5">
-        {mobileCards.map((card) => (
-          <div
-            key={card.src}
-            className="w-[43px] overflow-hidden rounded-[3px] border border-white bg-white shadow-[0_4px_10px_rgba(0,0,0,0.18)]"
-          >
-            <img src={card.src} alt="" aria-hidden="true" className="h-[28px] w-full object-cover" />
-            <div className="truncate px-0.5 py-[2px] text-center text-[4px] font-bold leading-none text-[#2D2F33]">
-              {card.label}
-            </div>
-          </div>
-        ))}
+        <HeroShowcase className="min-w-0" />
       </div>
     </div>
   );
@@ -145,7 +104,7 @@ function HeroText({ variant }: { variant: 'mobile' | 'desktop' }) {
         className={cn(
           'font-extrabold tracking-[-0.02em] text-[#2D2F33]',
           isMobile
-            ? 'max-w-[160px] text-[17px] leading-[1.18]'
+            ? 'mx-auto max-w-[220px] text-[24px] leading-[1.18]'
             : 'max-w-[500px] text-[36px] leading-[1.16] tracking-[-0.03em] lg:text-[44px] xl:max-w-[560px] xl:text-[56px] xl:leading-[1.21]',
         )}
       >
@@ -155,7 +114,7 @@ function HeroText({ variant }: { variant: 'mobile' | 'desktop' }) {
         className={cn(
           'text-[#2D2F33]',
           isMobile
-            ? 'mt-3 max-w-[150px] text-[6px] leading-[1.55]'
+            ? 'mx-auto mt-4 max-w-[220px] text-[10px] leading-[1.55]'
             : 'mt-5 max-w-[390px] text-[15px] leading-7 xl:max-w-[440px] xl:text-[16px]',
         )}
       >
@@ -166,7 +125,7 @@ function HeroText({ variant }: { variant: 'mobile' | 'desktop' }) {
         className={cn(
           'inline-flex items-center justify-center whitespace-nowrap rounded-[80px] bg-gray-900 font-bold text-white shadow-lg shadow-black/10 transition-colors hover:bg-gray-800',
           isMobile
-            ? 'mt-3 h-[24px] w-[96px] gap-1 text-[6px]'
+            ? 'mt-5 h-[36px] w-[148px] gap-2 text-[10px]'
             : 'mt-8 h-[60px] w-[234px] gap-[10px] px-[4px] py-[16px] text-[16px]',
         )}
       >
