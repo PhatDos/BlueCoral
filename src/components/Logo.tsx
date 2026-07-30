@@ -1,38 +1,53 @@
+import { cn } from '@/lib/cn';
+
 type LogoProps = {
   size: number;
+  className?: string;
 };
 
-const BASE_HEIGHT = 48;
-const BASE_WIDTH = 139;
-const BASE_GAP = 4;
-const BASE_WORDMARK_SIZE = 32;
-const BASE_ICON_WIDTH = 25;
-const BASE_ICON_HEIGHT = 27;
-const BASE_ICON_TOP = 10;
-const BASE_ICON_LEFT = 11;
+const LOGO_BASE = {
+  height: 48,
+  width: 139,
+  gap: 4,
+  wordmark: 32,
+  icon: {
+    width: 25,
+    height: 27,
+    top: 10,
+    left: 11,
+  },
+} as const;
 
-export default function Logo({ size }: LogoProps) {
-  const scale = size / BASE_HEIGHT;
-  const width = BASE_WIDTH * scale;
-  const circleSize = size;
-  const innerGap = BASE_GAP * scale;
-  const wordmarkSize = BASE_WORDMARK_SIZE * scale;
-  const iconWidth = BASE_ICON_WIDTH * scale;
-  const iconHeight = BASE_ICON_HEIGHT * scale;
-  const iconTop = BASE_ICON_TOP * scale;
-  const iconLeft = BASE_ICON_LEFT * scale;
+function scale(value: number, size: number) {
+  return (value / LOGO_BASE.height) * size;
+}
+
+export default function Logo({ size, className }: LogoProps) {
+  const width = scale(LOGO_BASE.width, size);
 
   return (
-    <div className="inline-flex items-center shrink-0" style={{ width, height: size, gap: innerGap }}>
-      <div className="relative shrink-0 rounded-full bg-[#BFFB4F]" style={{ width: circleSize, height: circleSize }}>
+    <div
+      className={cn('inline-flex shrink-0 items-center', className)}
+      style={{ width, height: size, gap: scale(LOGO_BASE.gap, size) }}
+    >
+      <span className="relative shrink-0 rounded-full bg-[#BFFB4F]" style={{ width: size, height: size }}>
         <img
           src="/images/Logo.png"
-          alt="Q logo"
+          alt=""
+          aria-hidden="true"
           className="absolute object-contain"
-          style={{ width: iconWidth, height: iconHeight, top: iconTop, left: iconLeft }}
+          style={{
+            width: scale(LOGO_BASE.icon.width, size),
+            height: scale(LOGO_BASE.icon.height, size),
+            top: scale(LOGO_BASE.icon.top, size),
+            left: scale(LOGO_BASE.icon.left, size),
+          }}
         />
-      </div>
-      <span className="font-black leading-none tracking-[-0.04em] text-[#2D2F33]" style={{ fontSize: wordmarkSize }}>
+      </span>
+      <span
+        className="font-black leading-none tracking-[-0.04em] text-[#2D2F33]"
+        style={{ fontSize: scale(LOGO_BASE.wordmark, size) }}
+      >
         table
       </span>
     </div>
