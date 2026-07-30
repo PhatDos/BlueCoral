@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import type { ReactNode, RefObject } from 'react';
 import { ArrowRight, ChevronDown, Menu } from 'lucide-react';
+import Dropdown from '@/components/ui/Dropdown';
 import Logo from '@/components/Logo';
-import MobileMenuPanel from '@/components/MobileMenuPanel';
-import { FreeTrialButton, LoginButton } from '@/components/NavbarActions';
-import { navLinks, solutions } from '@/components/navbarContent';
-import type { SolutionItem } from '@/components/navbarContent';
 import { cn } from '@/lib/cn';
+import MobileMenuPanel from './MobileMenuPanel';
+import { FreeTrialButton, LoginButton } from './NavbarActions';
+import { navLinks, solutions } from './navData';
+import type { SolutionItem } from './navData';
 
 export default function Navbar() {
   const [panelMounted, setPanelMounted] = useState(false);
@@ -33,9 +34,7 @@ export default function Navbar() {
     document.body.style.overflow = 'hidden';
 
     function closeOnEscape(event: KeyboardEvent) {
-      if (event.key === 'Escape') {
-        closeMenu();
-      }
+      if (event.key === 'Escape') closeMenu();
     }
 
     document.addEventListener('keydown', closeOnEscape);
@@ -122,7 +121,10 @@ function DesktopRight({
         dropdownOpen={dropdownOpen}
         onDropdownChange={onDropdownChange}
       />
-      <DesktopActions />
+      <div className="flex items-center gap-3">
+        <LoginButton />
+        <FreeTrialButton />
+      </div>
     </div>
   );
 }
@@ -150,15 +152,6 @@ function DesktopNav({
         <NavLink key={item}>{item}</NavLink>
       ))}
     </nav>
-  );
-}
-
-function DesktopActions() {
-  return (
-    <div className="flex items-center gap-3">
-      <LoginButton />
-      <FreeTrialButton />
-    </div>
   );
 }
 
@@ -197,8 +190,8 @@ function SolutionsDropdown() {
   const [activeId, setActiveId] = useState<string | null>(null);
 
   return (
-    <div
-      className="absolute left-1/2 top-full mt-4 min-w-[268px] -translate-x-1/2 rounded-[20px] border border-gray-100 bg-white py-3 shadow-[0_18px_50px_rgba(0,0,0,0.12)] animate-dropdown-fade"
+    <Dropdown
+      className="absolute left-1/2 top-full mt-4 min-w-[268px] -translate-x-1/2 rounded-[20px] border border-gray-100 bg-white py-3 shadow-[0_18px_50px_rgba(0,0,0,0.12)]"
       onMouseLeave={() => setActiveId(null)}
     >
       {solutions.map((item) => (
@@ -209,7 +202,7 @@ function SolutionsDropdown() {
           onHover={() => setActiveId(item.id)}
         />
       ))}
-    </div>
+    </Dropdown>
   );
 }
 
@@ -236,3 +229,4 @@ function SolutionLink({
     </a>
   );
 }
+

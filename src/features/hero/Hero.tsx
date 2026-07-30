@@ -1,81 +1,12 @@
 import { useEffect, useState } from 'react';
-import type { ReactNode } from 'react';
 import { ArrowRight } from 'lucide-react';
-import HeroShowcase from '@/components/HeroShowcase';
+import Button from '@/components/ui/Button';
 import Logo from '@/components/Logo';
+import { COLORS } from '@/constants/colors';
 import { cn } from '@/lib/cn';
-
-type HeroSlide = {
-  id: string;
-  visual: 'showcase' | 'image';
-  image: string;
-  title: ReactNode;
-  description: string;
-  cta: string;
-};
-
-const heroSlides: HeroSlide[] = [
-  {
-    id: 'overview',
-    visual: 'showcase',
-    image: '/images/hero-showcase-main.png',
-    title: (
-      <>
-        Quản lý dễ dàng,
-        <br />
-        bán hàng hiệu quả
-      </>
-    ),
-    description:
-      'Chào mừng bạn đến với Xứ sở thần tiên. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    cta: 'Đặt lịch tư vấn',
-  },
-  {
-    id: 'food',
-    visual: 'image',
-    image: '/images/an-uong.png',
-    title: (
-      <>
-        Tối ưu vận hành,
-        <br />
-        cho ngành ăn uống
-      </>
-    ),
-    description:
-      'Nhận order nhanh, quản lý bàn, in phiếu bếp và theo dõi doanh thu theo thời gian thực cho quán ăn, nhà hàng, cafe.',
-    cta: 'Khám phá ăn uống',
-  },
-  {
-    id: 'retail',
-    visual: 'image',
-    image: '/images/ban-le.png',
-    title: (
-      <>
-        Bán lẻ gọn hơn,
-        <br />
-        kiểm kho chuẩn hơn
-      </>
-    ),
-    description:
-      'Quản lý sản phẩm, tồn kho, thanh toán và lịch sử khách hàng trong một luồng bán hàng rõ ràng, dễ dùng mỗi ngày.',
-    cta: 'Khám phá bán lẻ',
-  },
-  {
-    id: 'service',
-    visual: 'image',
-    image: '/images/dich-vu.png',
-    title: (
-      <>
-        Dịch vụ chỉn chu,
-        <br />
-        chăm khách tốt hơn
-      </>
-    ),
-    description:
-      'Theo dõi lịch hẹn, nhân viên, gói dịch vụ và khách hàng thân thiết để mọi trải nghiệm diễn ra mượt mà.',
-    cta: 'Khám phá dịch vụ',
-  },
-];
+import HeroShowcase from './HeroShowcase';
+import { heroSlides } from './heroSlides';
+import type { HeroSlide } from './heroSlides';
 
 export default function Hero() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -120,7 +51,11 @@ function MobileHero({ slide }: { slide: HeroSlide }) {
 function DesktopHero({ slide }: { slide: HeroSlide }) {
   return (
     <div className="hidden md:block">
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,#F8F7ED_0%,#F2F7D7_100%)]" aria-hidden="true" />
+      <div
+        className="absolute inset-0"
+        style={{ background: `linear-gradient(90deg, ${COLORS.heroCream} 0%, ${COLORS.heroGreen} 100%)` }}
+        aria-hidden="true"
+      />
 
       <div className="relative z-10 grid min-h-[590px] grid-cols-[minmax(0,0.76fr)_minmax(0,1.24fr)] items-center gap-6 px-6 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:px-10 xl:grid-cols-2 xl:gap-8 xl:px-14">
         <div className="min-w-0 max-w-[500px] xl:max-w-[560px]">
@@ -214,18 +149,16 @@ function HeroText({ slide, variant }: { slide: HeroSlide; variant: 'mobile' | 'd
       >
         {slide.description}
       </p>
-      <a
+      <Button
+        as="a"
         href="#"
-        className={cn(
-          'inline-flex items-center justify-center whitespace-nowrap rounded-[80px] bg-gray-900 font-bold text-white shadow-lg shadow-black/10 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-gray-800 hover:shadow-xl active:translate-y-0',
-          isMobile
-            ? 'mt-5 h-[36px] w-[148px] gap-2 text-[10px]'
-            : 'mt-8 h-[60px] w-[234px] gap-[10px] px-[4px] py-[16px] text-[16px]',
-        )}
+        variant="dark"
+        size={isMobile ? 'sm' : 'lg'}
+        className={cn(isMobile ? 'mt-5 w-[148px] gap-2' : 'mt-8 w-[234px] gap-[10px] px-[4px] py-[16px]')}
       >
         {slide.cta}
         <ArrowRight size={isMobile ? 8 : 20} />
-      </a>
+      </Button>
     </div>
   );
 }
@@ -258,3 +191,4 @@ function SliderDots({
     </div>
   );
 }
+

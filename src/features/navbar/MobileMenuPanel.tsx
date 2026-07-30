@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { ArrowRight, ChevronDown, X } from 'lucide-react';
+import Dropdown from '@/components/ui/Dropdown';
 import Logo from '@/components/Logo';
-import { FreeTrialButton, LoginButton } from '@/components/NavbarActions';
-import type { SolutionItem } from '@/components/navbarContent';
 import { cn } from '@/lib/cn';
+import { FreeTrialButton, LoginButton } from './NavbarActions';
+import type { SolutionItem } from './navData';
 
 type MobileMenuPanelProps = {
   closing: boolean;
@@ -69,8 +70,8 @@ export default function MobileMenuPanel({
             </button>
 
             {dropdownOpen && (
-              <div
-                className="mt-2 space-y-1 rounded-2xl bg-white p-2 animate-fade-in"
+              <Dropdown
+                className="mt-2 space-y-1 rounded-2xl bg-white p-2"
                 onMouseLeave={() => setActiveSolutionId(null)}
               >
                 {solutions.map((item) => (
@@ -81,7 +82,7 @@ export default function MobileMenuPanel({
                     onHover={() => setActiveSolutionId(item.id)}
                   />
                 ))}
-              </div>
+              </Dropdown>
             )}
           </div>
 
@@ -102,7 +103,7 @@ export default function MobileMenuPanel({
         <div className="border-t border-gray-100 bg-white px-5 pb-6 pt-4">
           <div className="flex flex-col gap-3">
             <LoginButton className="w-full" onClick={onClose} />
-            <FreeTrialButton className="w-full" onClick={onClose} />
+            <FreeTrialButton className="w-full gap-1.5" onClick={onClose} />
           </div>
         </div>
       </aside>
@@ -134,3 +135,4 @@ function PanelSolutionLink({
     </a>
   );
 }
+

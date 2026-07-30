@@ -1,6 +1,6 @@
-import Navbar from '@/components/Navbar';
-import Hero from '@/components/Hero';
-import EverythingYouNeed from '@/components/EverythingYouNeed';
+import EverythingYouNeed from '@/features/everything-you-need/EverythingYouNeed';
+import Hero from '@/features/hero/Hero';
+import Navbar from '@/features/navbar/Navbar';
 
 export default function App() {
   return (

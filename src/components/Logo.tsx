@@ -1,3 +1,4 @@
+import { IMAGES } from '@/constants/assets';
 import { cn } from '@/lib/cn';
 
 type LogoProps = {
@@ -32,7 +33,7 @@ export default function Logo({ size, className }: LogoProps) {
     >
       <span className="relative shrink-0 rounded-full bg-[#BFFB4F]" style={{ width: size, height: size }}>
         <img
-          src="/images/Logo.png"
+          src={IMAGES.logo}
           alt=""
           aria-hidden="true"
           className="absolute object-contain"
